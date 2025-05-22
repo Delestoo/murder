@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Murder Role Play</title>
+  <style>
+    /* Общие стили */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Анимированный фон с частицами */
+    .particle-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: radial-gradient(circle, #ff1e1e 0%, transparent 70%);
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-20vh);
+        opacity: 0;
+      }
+    }
+
+    /* Плавный градиентный фон для body (под частицами) */
+    @keyframes bgGradient {
+      0% {
+        background-color: #0a0a0a;
+      }
+      50% {
+        background-color: #1a0a0a;
+      }
+      100% {
+        background-color: #0a0a0a;
+      }
+    }
+
+    body {
+      animation: bgGradient 30s ease-in-out infinite;
+    }
+
+    /* Стили для header */
+    header {
+      background: radial-gradient(circle at center, #ff1e1e, #1a1a1a);
+      padding: 30px;
+      text-align: center;
+      border-bottom: 3px solid #ff1e1e;
+      box-shadow: 0 0 15px #ff1e1e;
+      position: relative;
+      z-index: 2;
+      animation: floatUpText 6s ease-in-out infinite alternate;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      color: #fff;
+      text-shadow: 0 0 10px #ff3c3c;
+    }
+
+    /* Контейнер и основные блоки */
+    .container {
+      padding: 50px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: floatUpText 8s ease-in-out infinite alternate;
+    }
+
+    .description {
+      font-size: 22px;
+      margin-bottom: 30px;
+      color: #e0e0e0;
+    }
+
+    /* Кнопки с плаванием */
+    .button {
+      background: linear-gradient(45deg, #ff1e1e, #cc0000);
+      color: #fff;
+      padding: 15px 25px;
+      border: none;
+      font-size: 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 10px;
+      box-shadow: 0 0 15px #ff3c3c;
+      transition: all 0.3s ease;
+      animation: floatButton 5s ease-in-out infinite alternate;
+    }
+
+    .button:hover {
+      background: linear-gradient(45deg, #ff3c3c, #990000);
+      box-shadow: 0 0 25px #ff4d4d;
+      transform: scale(1.05);
+    }
+
+    /* Плавное движение блоков с текстом */
+    @keyframes floatUpText {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-10px); }
+    }
+
+    @keyframes floatButton {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-7px); }
+    }
+
+    /* Скрытые блоки */
+    .tutorial, .reasons {
+      margin-top: 30px;
+      padding: 30px;
+      background-color: #1a1a1a;
+      border-radius: 20px;
+      box-shadow: 0 0 15px #ff1e1e;
+      display: none;
+      text-align: left;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #ffffff;
+      font-size: 18px;
+      line-height: 1.6;
+      animation: fadeIn 0.5s ease-in-out;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    a {
+      color: #ff3c3c;
+      text-decoration: underline;
+    }
+
+    code {
+      background: #111;
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: #ff4d4d;
+    }
+
+    .heart {
+      color: #ff4d4d;
+    }
+
+    /* Социальные кнопки */
+    .social-buttons {
+      margin-top: 40px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      animation: floatUpText 6s ease-in-out infinite alternate;
+    }
+
+    .social-button {
+      display: inline-flex;
+      align-items: center;
+      background-color: #1a1a1a;
+      border: 2px solid #ff3c3c;
+      border-radius: 50px;
+      padding: 10px 20px;
+      margin: 10px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px #ff3c3c;
+      animation: floatButton 5s ease-in-out infinite alternate;
+    }
+
+    .social-button:hover {
+      background-color: #ff3c3c;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .social-button img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+
+    /* Скриншоты */
+    .screenshots-section {
+      text-align: center;
+      padding: 50px 20px;
+      background-color: #0f0f0f;
+      position: relative;
+      z-index: 2;
+    }
+
+    .screenshots-section h2 {
+      font-size: 28px;
+      color: #ff4d4d;
+      text-shadow: 0 0 10px #ff1e1e;
+      margin-bottom: 30px;
+      animation: floatUpText 6s ease-in-out infinite alternate;
+    }
+
+    .screenshots {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .screenshots img {
+      width: 300px;
+      height: auto;
+      border: 3px solid #ff1e1e;
+      box-shadow: 0 0 20px #ff1e1e;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: floatButton 6s ease-in-out infinite alternate;
+    }
+
+    .screenshots img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #ff3c3c;
+    }
+
+    /* Футер */
+    footer {
+      background-color: #1a1a1a;
+      color: #999;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      margin-top: 60px;
+      border-top: 2px solid #ff1e1e;
+      position: relative;
+      z-index: 2;
+      animation: floatUpText 6s ease-in-out infinite alternate;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Murder Role Play</h1>
+  </header>
+
+  <div class="container">
+    <p class="description">
+      Добро пожаловать на наш новый RP-сервер по SA-MP! <br />
+      Уникальная атмосфера, законы улиц и море ролевых возможностей.
+    </p>
+
+    <button class="button" onclick="toggleBlock('tutorial')">Как начать играть?</button>
+    <button class="button" onclick="toggleBlock('reasons')">Почему играть у нас?</button>
+
+    <div class="tutorial" id="tutorial">
+      <h2>Как же начать играть на нашем сервере "Murder Role Play"?</h2>
+      <ol>
+        <li>
+          Для начала
+          <a href="https://play.google.com/store/apps/details?id=ru.unisamp_mobile.launcher" target="_blank"
+            >скачать</a
+          >
+          Samp Launcher из Play Маркета.
+        </li>
+        <li>После скачивания устанавливаем актуальную версию [Lite/Full] — без разницы.</li>
+        <li>Далее заходим в раздел "Сервера", потом в верхнем углу "Favorites".</li>
+        <li>Нажимаем "добавить сервер" и пишем IP: <code>188.127.241.74:1153</code></li>
+        <li>Заходим, создаём пароль и всё!</li>
+      </ol>
+      <p style="text-align:center; margin-top: 20px;">
+        | Администрация сервера желает вам приятной игры на сервере
+        <span class="heart">❤️</span> |
+      </p>
+    </div>
+
+    <div class="reasons" id="reasons">
+      <h2>Почему я должен играть именно у вас?</h2>
+      <ol>
+        <li>
+          <strong>Платный мод</strong> — на сервере не какой-нибудь бесплатный мод, который есть у всех, а
+          платный и полностью переделанный под наш сервер.
+        </li>
+        <li><strong>Адекватное руководство</strong> — администрация всегда поможет, если возникнут вопросы или проблемы.</li>
+        <li>
+          <strong>Много вакантных постов</strong> — сервер недавно открылся, и у вас есть шанс занять высокие
+          должности, такие как: ГА, ЗГА и другие.
+        </li>
+      </ol>
+    </div>
+
+    <div class="social-buttons">
+      <a class="social-button" href="https://discord.gg/GHfDwmf7zX" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" alt="Discord" /> Discord
+      </a>
+      <a class="social-button" href="https://russia-game.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/892/892692.png" alt="Website" /> Перейти на сайт
+      </a>
+    </div>
+  </div>
+
+  <div class="screenshots-section">
+    <h2>Скриншоты с нашего сервера</h2>
+    <div class="screenshots">
+      <img src="photo1.png" alt="Скриншот 1" />
+      <img src="photo2.png" alt="Скриншот 2" />
+      <img src="photo3.png" alt="Скриншот 3" />
+    </div>
+  </div>
+
+  <footer>&copy; 2025 Murder RP. Все права защищены.</footer>
+
+  <div class="particle-container" id="particles"></div>
+
+  <script>
+    // Показать/скрыть блоки
+    function toggleBlock(id) {
+      const blocks = ['tutorial', 'reasons'];
+      blocks.forEach((block) => {
+        const el = document.getElementById(block);
+        el.style.display = block === id ? (el.style.display === 'block' ? 'none' : 'block') : 'none';
+      });
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    // Создание частиц
+    const particlesCount = 30;
+    const container = document.getElementById('particles');
+
+    for (let i = 0; i < particlesCount; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      const size = Math.random() * 10 + 5; // 5-15px
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDelay = Math.random() * 20 + 's';
+      p.style.animationDuration = 15 + Math.random() * 15 + 's';
+      container.appendChild(p);
+    }
+  </script>
+</body>
+</html>
